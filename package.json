@@ -1,0 +1,32 @@
+{
+  "name": "moncache-driver",
+  "version": "1.0.0",
+  "description": "MonCache Driver",
+  "author": "Maks Atygaev <jxcoder@ya.ru>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moncache/moncache-nodejs-driver"
+  },
+  "bugs": {
+    "url": "https://github.com/moncache/moncache-nodejs-driver/issues"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "mongodb": "^2.0.42"
+  },
+  "devDependencies": {
+    "jsdoc": "3.3.2"
+  },
+  "engines": {
+    "node": "0.10.0"
+  },
+  "keywords": [
+    "moncache",
+    "mongodb",
+    "driver"
+  ],
+  "license": "MIT",
+  "private": true
+}
