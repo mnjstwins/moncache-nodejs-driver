@@ -14,6 +14,7 @@
     "test": "mocha"
   },
   "dependencies": {
+    "data.maybe": "^1.2.1",
     "mongodb": "^2.0.42",
     "nsnjson-driver": "0.0.7"
   },
