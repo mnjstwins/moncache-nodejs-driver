@@ -14,7 +14,8 @@
     "test": "mocha"
   },
   "dependencies": {
-    "mongodb": "^2.0.42"
+    "mongodb": "^2.0.42",
+    "nsnjson-driver": "0.0.7"
   },
   "devDependencies": {
     "jsdoc": "3.3.2"
