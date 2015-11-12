@@ -1,6 +1,6 @@
 {
   "name": "moncache-driver",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "MonCache Driver",
   "author": "Maks Atygaev <jxcoder@ya.ru>",
   "repository": {
@@ -29,6 +29,5 @@
     "mongodb",
     "driver"
   ],
-  "license": "MIT",
-  "private": true
+  "license": "MIT"
 }
