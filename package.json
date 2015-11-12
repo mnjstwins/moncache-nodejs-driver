@@ -1,6 +1,6 @@
 {
   "name": "moncache-driver",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "MonCache Driver",
   "author": "Maks Atygaev <jxcoder@ya.ru>",
   "repository": {
@@ -14,7 +14,9 @@
     "test": "mocha"
   },
   "dependencies": {
-    "mongodb": "^2.0.42"
+    "data.maybe": "^1.2.1",
+    "mongodb": "^2.0.42",
+    "nsnjson-driver": "0.0.7"
   },
   "devDependencies": {
     "jsdoc": "3.3.2"
@@ -27,6 +29,5 @@
     "mongodb",
     "driver"
   ],
-  "license": "MIT",
-  "private": true
+  "license": "MIT"
 }
