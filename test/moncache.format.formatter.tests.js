@@ -43,11 +43,6 @@ var presentation = [
   ]
 ];
 
-
-//var document = 10.07;
-
-//var presentation = [1, 10.07];
-
 describe('Formatter @ encode (document)', function() {
   function assertEncoding(document, presentation) {
     it('Document', function() {
