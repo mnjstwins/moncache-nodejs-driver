@@ -21,7 +21,7 @@ Collection.prototype.insertOne = function(document, callback) {
     if (error) {
       callback(true, data);
     } else {
-      callback(false, {insertedCount: data.nInserted});
+      callback(false, {nInserted: data.nInserted, nModified: data.nModified, nRemoved: data.nRemoved});
     }
   });
 };
@@ -33,7 +33,7 @@ Collection.prototype.saveOne = function(document, callback) {
     if (error) {
       callback(true, data);
     } else {
-      callback(false, {insertedCount: data.nInserted});
+      callback(false, {nInserted: data.nInserted, nModified: data.nModified, nRemoved: data.nRemoved});
     }
   });
 };
@@ -83,7 +83,7 @@ Collection.prototype.update = function(query, modifications, parameters, callbac
     if (error) {
       callback(true, data);
     } else {
-      callback(false, {matchedCount: data.nMatched, insertedCount: data.nInserted, updatedCount: data.nUpdated});
+      callback(false, {nInserted: data.nInserted, nModified: data.nModified, nRemoved: data.nRemoved});
     }
   });
 };
@@ -117,7 +117,7 @@ Collection.prototype.remove = function(query, parameters, callback) {
     if (error) {
       callback(true, data);
     } else {
-      callback(false, {matchedCount: data.nMatched, deletedCount: data.rRemoved});
+      callback(false, {nInserted: data.nInserted, nModified: data.nModified, nRemoved: data.nRemoved});
     }
   });
 };
