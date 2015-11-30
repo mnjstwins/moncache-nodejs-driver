@@ -98,6 +98,7 @@ function step5(db, done) {
     db.collection('collection').findOne({_id: document['_id']}, {}, function(e, result) {
       assert.equal(false, !!e);
 
+      assert.equal(true,  result.hasOwnProperty('_id'));
       assert.equal(true,  result.hasOwnProperty('f1'));
       assert.equal(true,  result.hasOwnProperty('f2'));
       assert.equal(false, result.hasOwnProperty('f3'));
@@ -105,6 +106,7 @@ function step5(db, done) {
       assert.equal(true,  result.hasOwnProperty('f5'));
       assert.equal(true,  result.hasOwnProperty('f6'));
 
+      assert.equal(document['_id'].toString(), result['_id'].toString());
       assert.equal(document.f1, result.f1);
       assert.equal(10.07,       result.f2)
       assert.equal(document.f4, result.f4);
@@ -113,8 +115,61 @@ function step5(db, done) {
 
       document = result;
 
-      stepDone(db, done);
+      step6(db, done);
     });
+  });
+}
+
+function step6(db, done) {
+  var query = {
+    f1: {
+      $exists: true
+    },
+    f2: {
+      $exists: true
+    },
+    f3: {
+      $exists: false
+    },
+    f4: {
+      $exists: true
+    },
+    f5: {
+      $exists: true
+    },
+    f6: {
+      $not: {
+        $exists: false
+      }
+    },
+    f7: {
+      $not: {
+        $exists: true
+      }
+    }
+  };
+
+  db.collection('collection').findOne(query, {}, function(e, result) {
+    assert.equal(false, !!e);
+
+    assert.equal(true,  result.hasOwnProperty('_id'));
+    assert.equal(true,  result.hasOwnProperty('f1'));
+    assert.equal(true,  result.hasOwnProperty('f2'));
+    assert.equal(false, result.hasOwnProperty('f3'));
+    assert.equal(true,  result.hasOwnProperty('f4'));
+    assert.equal(true,  result.hasOwnProperty('f5'));
+    assert.equal(true,  result.hasOwnProperty('f6'));
+
+    assert.equal(document['_id'].toString(), result['_id'].toString());
+    assert.equal(document.f1, result.f1);
+    assert.equal(document.f2, result.f2)
+    assert.equal(document.f4, result.f4);
+    assert.equal(document.f5, result.f5);
+    assert.equal(document.f6, result.f6);
+
+    document = result;
+
+    stepDone(db, done);
   });
 }
 
