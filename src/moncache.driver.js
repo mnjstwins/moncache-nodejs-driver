@@ -1,3 +1,5 @@
+var ObjectId = require('mongodb').ObjectId;
+
 var Formatter = require('./moncache.format.formatter');
 
 function MonCacheDriver() {};
@@ -74,7 +76,7 @@ MonCacheDriver.execute = function(parameters, callback) {
         } catch(e) {
           var error = 'Invalid MonCacheDriver response: invalid response'
 
-          console.log('[ERROR]', '[MonCacheDriver @ response]', error);
+          console.log('[ERROR]', '[MonCacheDriver @ response]', error, e);
 
           callback(true, {error: error});
         }
@@ -85,6 +87,10 @@ MonCacheDriver.execute = function(parameters, callback) {
 
 MonCacheDriver.insert = function(dbName, collectionName, document, callback) {
   console.log('[TRACE]', '[MonCacheDriver @ insert]', dbName, collectionName, document);
+
+  if (!document.hasOwnProperty('_id')) {
+    document['_id'] = ObjectId();
+  }
 
   var parameters = {
     function: 'insert^MonCacheDriver',
@@ -100,6 +106,10 @@ MonCacheDriver.insert = function(dbName, collectionName, document, callback) {
 
 MonCacheDriver.save = function(dbName, collectionName, document, callback) {
   console.log('[TRACE]', '[MonCacheDriver @ save]', dbName, collectionName, document);
+
+  if (!document.hasOwnProperty('_id')) {
+    document['_id'] = ObjectId();
+  }
 
   var parameters = {
     function: 'save^MonCacheDriver',
