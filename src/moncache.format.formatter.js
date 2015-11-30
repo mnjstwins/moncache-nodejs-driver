@@ -6,7 +6,7 @@ var Types = nsnjson.Types;
 Types['OBJECT_ID'] = 'object_id';
 
 var Format = nsnjson.Format;
-Format['TYPE_MARKER_OBJECT_ID'] = 7;
+Format['TYPE_MARKER_OBJECT_ID'] = 6;
 
 var ObjectId = require('mongodb').ObjectId;
 
