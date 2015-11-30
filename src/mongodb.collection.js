@@ -21,7 +21,7 @@ Collection.prototype.insertOne = function(document, callback) {
     if (error) {
       callback(true, data);
     } else {
-      callback(false, {nInserted: data.nInserted, nModified: data.nModified, nRemoved: data.nRemoved});
+      callback(false, {insertedCount: data.nInserted, insertedId: document['_id']});
     }
   });
 };
