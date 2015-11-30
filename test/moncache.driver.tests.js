@@ -50,10 +50,29 @@ function step3(db, done) {
     result.toArray(function(e, documents) {
       assert.equal(false, !!e);
 
-      assert.equal(true, documents.length > 0);
+      assert.equal(true, documents.length == 1);
 
-      stepDone(db, done);
+      step4(db, done);
     });
+  });
+}
+
+function step4(db, done) {
+  db.collection('collection').findOne({_id: document['_id']}, {}, function(e, result) {
+    console.log({e: e, r: result});
+
+    assert.equal(false, !!e);
+
+    assert.equal(document['_id'].toString(), result['_id'].toString());
+
+    assert.equal(document.f1, result.f1);
+    assert.equal(document.f2, result.f2);
+    assert.equal(document.f3, result.f3);
+    assert.equal(document.f4, result.f4);
+    assert.equal(document.f5, result.f5);
+    assert.equal(document.f6, result.f6);
+
+    stepDone(db, done);
   });
 }
 
