@@ -122,7 +122,7 @@ Collection.prototype.remove = function(query, parameters, callback) {
   });
 };
 
-Collection.prototype.removeOne = function(query, callback) {
+Collection.prototype.deleteOne = function(query, callback) {
   console.log('[TRACE]', '[' + this.getDBName() + '.' + this.getName() + ' @ remove]', query);
 
   var parameters = {
@@ -132,7 +132,7 @@ Collection.prototype.removeOne = function(query, callback) {
   this.remove(query, parameters, callback);
 };
 
-Collection.prototype.removeMany = function(query, callback) {
+Collection.prototype.deleteMany = function(query, callback) {
   console.log('[TRACE]', '[' + this.getDBName() + '.' + this.getName() + ' @ remove]', query);
 
   var parameters = {
