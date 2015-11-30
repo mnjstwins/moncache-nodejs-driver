@@ -50,7 +50,7 @@ function step3(db, done) {
     result.toArray(function(e, documents) {
       assert.equal(false, !!e);
 
-      assert.equal(true, documents.length == 1);
+      assert.equal(1, documents.length);
 
       step4(db, done);
     });
@@ -59,8 +59,6 @@ function step3(db, done) {
 
 function step4(db, done) {
   db.collection('collection').findOne({_id: document['_id']}, {}, function(e, result) {
-    console.log({e: e, r: result});
-
     assert.equal(false, !!e);
 
     assert.equal(document['_id'].toString(), result['_id'].toString());
@@ -71,6 +69,31 @@ function step4(db, done) {
     assert.equal(document.f4, result.f4);
     assert.equal(document.f5, result.f5);
     assert.equal(document.f6, result.f6);
+
+    step5(db, done);
+  });
+}
+
+function step5(db, done) {
+  var query = {
+    _id: { $eq: document['_id'] }
+  };
+
+  var modifications = {
+    $set: {
+      f2: 10.07
+    },
+    $unset: {
+      f3: ''
+    }
+  };
+
+  db.collection('collection').updateOne(query, modifications, function(e, result) {
+    assert.equal(false, !!e);
+
+    assert.equal(true, result.hasOwnProperty('modifiedCount'));
+
+    assert.equal(1, result.modifiedCount);
 
     stepDone(db, done);
   });
@@ -84,7 +107,7 @@ function stepDone(db, done) {
 
 describe('MongoProvider', function() {
   function assertInsertOne(mongoProvider) {
-    it('insertOne @ ' + mongoProvider.name, function(done) {
+    it('SRUF @ ' + mongoProvider.name, function(done) {
       var MongoClient = mongoProvider.provider.MongoClient;
 
       MongoClient.connect(url, function(err, db) {
