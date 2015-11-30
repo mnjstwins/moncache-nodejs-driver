@@ -95,7 +95,26 @@ function step5(db, done) {
 
     assert.equal(1, result.modifiedCount);
 
-    stepDone(db, done);
+    db.collection('collection').findOne({_id: document['_id']}, {}, function(e, result) {
+      assert.equal(false, !!e);
+
+      assert.equal(true,  result.hasOwnProperty('f1'));
+      assert.equal(true,  result.hasOwnProperty('f2'));
+      assert.equal(false, result.hasOwnProperty('f3'));
+      assert.equal(true,  result.hasOwnProperty('f4'));
+      assert.equal(true,  result.hasOwnProperty('f5'));
+      assert.equal(true,  result.hasOwnProperty('f6'));
+
+      assert.equal(document.f1, result.f1);
+      assert.equal(10.07,       result.f2)
+      assert.equal(document.f4, result.f4);
+      assert.equal(document.f5, result.f5);
+      assert.equal(document.f6, result.f6);
+
+      document = result;
+
+      stepDone(db, done);
+    });
   });
 }
 
