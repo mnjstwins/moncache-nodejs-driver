@@ -83,7 +83,7 @@ Collection.prototype.update = function(query, modifications, parameters, callbac
     if (error) {
       callback(true, data);
     } else {
-      callback(false, {nInserted: data.nInserted, nModified: data.nModified, nRemoved: data.nRemoved});
+      callback(false, {modifiedCount: data.nModified});
     }
   });
 };
