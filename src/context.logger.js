@@ -9,7 +9,7 @@ if (!IO.existsSync(logsDirectory)) {
 var intel = require('intel');
 intel.basicConfig({
   file: logsDirectory + '/logs.log',
-  format: '[%(date)s] %(name)s.%(levelname)s: %(message)s',
+  format: '[%(date)s] %(levelname)s [%(name)s]: %(message)s',
   level: intel.TRACE
 });
 
