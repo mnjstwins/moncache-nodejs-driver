@@ -1,3 +1,5 @@
+var logger = require('./context.logger')('Format');
+
 var Maybe = require('data.maybe');
 
 var nsnjson = require('nsnjson-driver');
@@ -38,10 +40,22 @@ var driver = nsnjson.withArrayStyle({
 });
 
 module.exports = {
-  encode: function(document) {
-    return driver.encode(document).get();
+  encode: function(data) {
+    logger.verbose('Format @ encode <= ' + JSON.stringify(data));
+
+    var result = driver.encode(data);
+
+    logger.verbose('Format @ encode => ' + JSON.stringify(result));
+
+    return result.get();
   },
-  decode: function(presentation) {
-    return driver.decode(presentation).get();
+  decode: function(data) {
+    logger.verbose('Format @ decode <= ' + JSON.stringify(data));
+
+    var result = driver.decode(data);
+
+    logger.verbose('Format @ decode => ' + JSON.stringify(result));
+
+    return result.get();
   }
 };
