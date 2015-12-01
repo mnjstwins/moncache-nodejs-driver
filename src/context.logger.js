@@ -6,19 +6,13 @@ if (!IO.existsSync(logsDirectory)) {
   IO.mkdirSync(logsDirectory);
 }
 
-var winston = require('winston');
-winston.emitErrs = true;
-
-var logger = new (winston.Logger)({
-  transports: [
-    new (winston.transports.File)({
-      level: 'silly',
-      filename: logsDirectory + '/logs.log',
-      json: false,
-      maxsize: 5242880, //5MB
-      maxFiles: 10,
-    })
-  ]
+var intel = require('intel');
+intel.basicConfig({
+  file: logsDirectory + '/logs.log',
+  format: '[%(date)s] %(name)s.%(levelname)s: %(message)s',
+  level: intel.TRACE
 });
 
-module.exports = logger;
+module.exports = function(name) {
+  return intel.getLogger(name);
+};
