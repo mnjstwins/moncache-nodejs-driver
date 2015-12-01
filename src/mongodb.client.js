@@ -1,3 +1,5 @@
+var logger = require('./context.logger')('MongoDB Client');
+
 /** @module mongodb */
 var MonCacheDriver = require('./moncache.driver');
 
@@ -11,7 +13,7 @@ MongoClient.connect = function(url, callback) {
   if (!MonCacheDriver.driver) {
     MonCacheDriver.connect(function(error) {
       if (error) {
-        console.log('[ERROR]', 'MongoDB client is not connected.');
+        logger.error('MongoDB client is not connected.');
       }
 
       callback(error, new DB(dbName));
