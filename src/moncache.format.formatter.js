@@ -45,7 +45,7 @@ module.exports = {
 
     var result = driver.encode(data);
 
-    logger.verbose('Format @ encode => ' + JSON.stringify(result));
+    logger.verbose('Format @ encode => ' + JSON.stringify(result.getOrElse('')));
 
     return result.get();
   },
@@ -54,7 +54,7 @@ module.exports = {
 
     var result = driver.decode(data);
 
-    logger.verbose('Format @ decode => ' + JSON.stringify(result));
+    logger.verbose('Format @ decode => ' + JSON.stringify(result.getOrElse('')));
 
     return result.get();
   }
