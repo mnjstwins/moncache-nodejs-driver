@@ -13,6 +13,14 @@ intel.basicConfig({
   level: intel.TRACE
 });
 
+intel.info('----------------------------------------------------------------------------------------------------');
+intel.info('|');
+intel.info('|');
+intel.info('|                                                 ', new Date());
+intel.info('|');
+intel.info('|');
+intel.info('----------------------------------------------------------------------------------------------------');
+
 module.exports = function(name) {
   return intel.getLogger(name);
 };
