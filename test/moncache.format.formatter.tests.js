@@ -39,7 +39,7 @@ var presentation = [
     'field7', [ 2, 'MonCache' ]
   ],
   [
-    'field8', [ 7, '563e8034ea7ccc3c071ea31a' ]
+    'field8', [ 6, '563e8034ea7ccc3c071ea31a' ]
   ]
 ];
 
