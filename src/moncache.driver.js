@@ -1,3 +1,5 @@
+var logger = require('./context.logger')('Driver');
+
 var ObjectId = require('mongodb').ObjectId;
 
 var Formatter = require('./moncache.format.formatter');
@@ -5,19 +7,23 @@ var Formatter = require('./moncache.format.formatter');
 function MonCacheDriver() {};
 
 MonCacheDriver.connect = function(callback) {
-  console.log('[TRACE]', '[MonCacheDriver @ connect]');
+  logger.verbose('connect');
 
   var CacheDriver = require('cache').Cache;
 
   if (!MonCacheDriver.driver) {
     MonCacheDriver.driver = new CacheDriver();
 
-    MonCacheDriver.driver.open({
+    var connection = {
       path: process.env.GLOBALS_HOME + '/mgr',
       username: process.env.MONCACHE_USERNAME,
       password: process.env.MONCACHE_PASSWORD,
       namespace: process.env.MONCACHE_NAMESPACE
-    }, function(error, result) {
+    };
+
+    MonCacheDriver.driver.open(connection, function(error, info) {
+      logger.verbose('Connection info: ', {error: error, info: info});
+
       callback(error);
     });
   } else {
@@ -34,22 +40,22 @@ MonCacheDriver.isNotConnected = function() {
 };
 
 MonCacheDriver.execute = function(parameters, callback) {
-  console.log('[TRACE]', '[MonCacheDriver @ execute]', parameters);
+  logger.verbose('execute ', parameters);
 
   if (MonCacheDriver.isNotConnected()) {
     var error = 'MonCacheDriver is not connected';
 
-    console.log('[ERROR]', '[MonCacheDriver @ execute]', error);
+    logger.error('execute', error);
 
     callback(true, {error: error});
   } else {
     MonCacheDriver.driver.function(parameters, function(callError, callResponse) {
-      console.log('[TRACE]', '[Cache @ call]', {error: callError, response: callResponse});
+      logger.verbose('call', {error: callError, response: callResponse});
 
       if (callError) {
         var error = 'MonCacheDriver call problem: ' + JSON.stringify(callResponse);
 
-        console.log('[ERROR]', '[Cache @ call]', error);
+        logger.error('call', error);
 
         callback(true, {error: error});
       } else {
@@ -59,14 +65,14 @@ MonCacheDriver.execute = function(parameters, callback) {
           if (response.hasOwnProperty('error')) {
             var error = 'Invalid MonCacheDriver response: ' + JSON.stringify(response.error);
 
-            console.log('[ERROR]', '[MonCacheDriver @ response]', error);
+            logger.error('call', error);
 
             callback(true, {error: error});
           }
           else if (!response.hasOwnProperty('data')) {
             var error = 'Invalid MonCacheDriver response: response has no data';
 
-            console.log('[ERROR]', '[MonCacheDriver @ response]', error);
+            logger.error('call', error);
 
             callback(true, {error: error});
           }
@@ -76,7 +82,7 @@ MonCacheDriver.execute = function(parameters, callback) {
         } catch(e) {
           var error = 'Invalid MonCacheDriver response: invalid response'
 
-          console.log('[ERROR]', '[MonCacheDriver @ response]', error, e);
+          logger.error('call', error, e);
 
           callback(true, {error: error});
         }
@@ -86,7 +92,7 @@ MonCacheDriver.execute = function(parameters, callback) {
 };
 
 MonCacheDriver.insert = function(dbName, collectionName, document, callback) {
-  console.log('[TRACE]', '[MonCacheDriver @ insert]', dbName, collectionName, document);
+  logger.verbose('insert', dbName, collectionName, document);
 
   if (!document.hasOwnProperty('_id')) {
     document['_id'] = ObjectId();
@@ -105,7 +111,7 @@ MonCacheDriver.insert = function(dbName, collectionName, document, callback) {
 };
 
 MonCacheDriver.save = function(dbName, collectionName, document, callback) {
-  console.log('[TRACE]', '[MonCacheDriver @ save]', dbName, collectionName, document);
+  logger.verbose('save', dbName, collectionName, document);
 
   if (!document.hasOwnProperty('_id')) {
     document['_id'] = ObjectId();
@@ -124,7 +130,7 @@ MonCacheDriver.save = function(dbName, collectionName, document, callback) {
 };
 
 MonCacheDriver.count = function(dbName, collectionName, query, callback) {
-  console.log('[TRACE]', '[MonCacheDriver @ count]', dbName, collectionName, query);
+  logger.verbose('count', dbName, collectionName, query);
 
   var parameters = {
     function: 'count^MonCacheDriver',
@@ -139,7 +145,7 @@ MonCacheDriver.count = function(dbName, collectionName, query, callback) {
 };
 
 MonCacheDriver.find = function(dbName, collectionName, query, projection, callback) {
-  console.log('[TRACE]', '[MonCacheDriver @ find]', dbName, collectionName, query, projection);
+  logger.verbose('find', dbName, collectionName, query, projection);
 
   var parameters = {
     function: 'find^MonCacheDriver',
@@ -155,7 +161,7 @@ MonCacheDriver.find = function(dbName, collectionName, query, projection, callba
 };
 
 MonCacheDriver.findOne = function(dbName, collectionName, query, projection, callback) {
-  console.log('[TRACE]', '[MonCacheDriver @ findOne]', dbName, collectionName, query, projection);
+  logger.verbose('findOne', dbName, collectionName, query, projection);
 
   var parameters = {
     function: 'findOne^MonCacheDriver',
@@ -171,7 +177,7 @@ MonCacheDriver.findOne = function(dbName, collectionName, query, projection, cal
 };
 
 MonCacheDriver.update = function(dbName, collectionName, query, modifications, parameters, callback) {
-  console.log('[TRACE]', '[MonCacheDriver @ update]', dbName, collectionName, query, modifications, parameters);
+  logger.verbose('update', dbName, collectionName, query, modifications, parameters);
 
   var parameters = {
     function: 'update^MonCacheDriver',
@@ -188,7 +194,7 @@ MonCacheDriver.update = function(dbName, collectionName, query, modifications, p
 };
 
 MonCacheDriver.remove = function(dbName, collectionName, query, parameters, callback) {
-  console.log('[TRACE]', '[MonCacheDriver @ remove]', dbName, collectionName, query, parameters);
+  logger.verbose('remove', dbName, collectionName, query, parameters);
 
   var parameters = {
     function: 'remove^MonCacheDriver',
@@ -204,6 +210,8 @@ MonCacheDriver.remove = function(dbName, collectionName, query, parameters, call
 };
 
 MonCacheDriver.close = function() {
+  logger.verbose('close connection');
+
   MonCacheDriver.driver.close();
 
   MonCacheDriver.driver = null;
