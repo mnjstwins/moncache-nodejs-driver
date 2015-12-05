@@ -28,14 +28,14 @@ Collection.prototype.insertOne = function(document, callback) {
   });
 };
 
-Collection.prototype.saveOne = function(document, callback) {
+Collection.prototype.save = function(document, callback) {
   logger.verbose('[' + this.getDBName() + '.' + this.getName() + ' @ save]', document);
 
   MonCacheDriver.save(this.getDBName(), this.getName(), document, function(error, data) {
     if (error) {
       callback(error, null);
     } else {
-      callback(null, {nInserted: data.nInserted, nModified: data.nModified, nRemoved: data.nRemoved});
+      callback(null, {upsertedCount: data.nInserted, modifiedCount: data.nModified});
     }
   });
 };
@@ -121,7 +121,7 @@ Collection.prototype.remove = function(query, parameters, callback) {
     if (error) {
       callback(error, null);
     } else {
-      callback(null, {nInserted: data.nInserted, nModified: data.nModified, nRemoved: data.nRemoved});
+      callback(null, {deletedCount: data.nRemoved});
     }
   });
 };
