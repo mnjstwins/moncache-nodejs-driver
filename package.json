@@ -14,6 +14,7 @@
     "test": "mocha"
   },
   "dependencies": {
+    "bluebird": "^3.0.6",
     "data.maybe": "^1.2.1",
     "intel": "^1.0.2",
     "mongodb": "^2.0.42",
