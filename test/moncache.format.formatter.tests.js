@@ -43,42 +43,18 @@ var presentation = [
   ]
 ];
 
-describe('Formatter @ encode (document)', function() {
-  function assertEncoding(document, presentation) {
-    it('Document', function() {
-      assert.deepEqual(presentation, Formatter.encode(document));
-    });
-  };
+describe('Formatter', function() {
+  it('encode (document)', function() {
+    assert.deepEqual(presentation, Formatter.encode(document));
+  });
 
-  assertEncoding(document, presentation);
-});
+  it('decode (presentation)', function() {
+    assert.deepEqual(document, Formatter.decode(presentation));
+  });
 
-describe('Formatter @ decode (presentation)', function() {
-  function assertDecoding(document, presentation) {
-    it('Document', function() {
-      assert.deepEqual(document, Formatter.decode(presentation));
-    });
-  };
-
-  assertDecoding(document, presentation);
-});
-
-describe('Formatter @ consistency (document <-> presentation)', function() {
-  function assertConsistencyByEncoding(document) {
+  it('consistency (document <-> presentation)', function() {
     assert.deepEqual(document, Formatter.decode(Formatter.encode(document)));
-  }
 
-  function assertConsistencyByDecoding(presentation) {
     assert.deepEqual(presentation, Formatter.encode(Formatter.decode(presentation)));
-  }
-
-  function assertConsistency(document, presentation) {
-    it('Document', function() {
-      assertConsistencyByEncoding(document);
-
-      assertConsistencyByDecoding(presentation);
-    });
-  };
-
-  assertConsistency(document, presentation);
+  });
 });
