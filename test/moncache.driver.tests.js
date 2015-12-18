@@ -4,7 +4,7 @@ var assert = require('assert');
 
 var driver = require('../src/moncache.driver');
 
-var url = 'mongodb://localhost:27017/driver_nodejs_tests';
+var url = 'mongodb://localhost:27017/moncache_driver_nodejs_tests';
 
 describe('MongoProvider', function() {
   function assertInsertOne(mongoProvider) {
