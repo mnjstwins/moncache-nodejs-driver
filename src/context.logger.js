@@ -8,7 +8,7 @@ if (!IO.existsSync(logsDirectory)) {
 
 var intel = require('intel');
 intel.basicConfig({
-  file: logsDirectory + '/logs.log',
+  file: logsDirectory + '/moncache.driver.log',
   format: '[%(date)s] %(levelname)s [%(name)s]: %(message)s',
   level: intel.TRACE
 });
