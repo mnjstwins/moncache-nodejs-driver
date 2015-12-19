@@ -7,7 +7,7 @@ var driver = require('../src/moncache.driver');
 var url = 'mongodb://localhost:27017/moncache_driver_nodejs_tests';
 
 describe('MongoProvider', function() {
-  function assertInsertOne(mongoProvider) {
+  function assertSFUR(mongoProvider) {
     it('SRUF @ ' + mongoProvider.name, function() {
       var MongoClient = Promise.promisifyAll(mongoProvider.provider.MongoClient);
 
@@ -244,8 +244,8 @@ describe('MongoProvider', function() {
     });
   }
 
-  assertInsertOne({provider: require('mongodb'), name: 'mongodb'});
+  assertSFUR({provider: require('mongodb'), name: 'mongodb'});
 
-  assertInsertOne({provider: require('../'), name: 'moncache'});
+  assertSFUR({provider: require('../'), name: 'moncache'});
 
 });
